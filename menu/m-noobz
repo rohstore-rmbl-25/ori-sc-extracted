@@ -1,0 +1,453 @@
+#!/bin/bash
+# // Exporting Language to UTF-8
+export LC_ALL='en_US.UTF-8'
+export LANG='en_US.UTF-8'
+export LANGUAGE='en_US.UTF-8'
+export LC_CTYPE='en_US.utf8'
+
+# // Export Color & Information
+export RED='\033[0;31m'
+export GREEN='\033[0;32m'
+export YELLOW='\033[0;33m'
+export BLUE='\033[0;34m'
+export PURPLE='\033[0;35m'
+export CYAN='\033[0;36m'
+export LIGHT='\033[0;37m'
+export NC='\033[0m'
+
+# // Export Banner Status Information
+export EROR="[${RED} EROR ${NC}]"
+export INFO="[${YELLOW} INFO ${NC}]"
+export OKEY="[${GREEN} OKEY ${NC}]"
+export PENDING="[${YELLOW} PENDING ${NC}]"
+export SEND="[${YELLOW} SEND ${NC}]"
+export RECEIVE="[${YELLOW} RECEIVE ${NC}]"
+
+# // Export Align
+export BOLD="\e[1m"
+export WARNING="${RED}\e[5m"
+export UNDERLINE="\e[4m"
+
+# // Exporting URL Host
+export Server_URL="autosc.me/aio"
+export Server_Port="443"
+export Server_IP="underfined"
+export Script_Mode="Stable"
+export Auther="XdrgVPN"
+
+colornow=$(cat /etc/rmbl/theme/color.conf)
+colorfont=$(cat /etc/rmbl/warnafont/warnaf.conf)
+NC="\e[0m"
+RED="\033[0;31m"
+COLOR1="$(cat /etc/rmbl/theme/$colornow | grep -w "TEXT" | cut -d: -f2|sed 's/ //g')"
+COLBG1="$(cat /etc/rmbl/theme/$colornow | grep -w "BG" | cut -d: -f2|sed 's/ //g')"
+export WH="$(cat /etc/rmbl/warnafont/$colorfont | grep -w "WARNAF" | cut -d: -f2|sed 's/ //g')"
+
+clear
+ISP=$(cat /etc/xray/isp)
+CITY=$(cat /etc/xray/city)
+TIMES="10"
+author=$(cat /etc/profil)
+domain=`cat /etc/xray/domain`
+TIMES="10"
+CHATID=$(cat /etc/per/id)
+KEY=$(cat /etc/per/token)
+URL="https://api.telegram.org/bot$KEY/sendMessage"
+domain=`cat /etc/xray/domain`
+CHATID2=$(cat /etc/perlogin/id)
+KEY2=$(cat /etc/perlogin/token)
+URL2="https://api.telegram.org/bot$KEY2/sendMessage"
+if [ ! -e /etc/xray/noobz/akun ]; then
+mkdir -p /etc/xray/noobz/akun
+fi
+function create(){
+clear
+
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║${NC}${COLBG1}                ${WH}• NOOBZ PANEL MENU •                ${NC}$COLOR1║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+read -p "Username: " user
+read -p "Password: " pass
+until [[ $exp =~ ^[0-9]+$ ]]; do
+read -p "Exp (0 for unlimited days):" exp
+done
+read -p "IP LIMIT " ip
+
+if [ ! -e /etc/sf/limit/noobs/ip/ ]; then
+  mkdir -p /etc/sf/limit/noobs/ip/
+fi
+echo "$ip" > /etc/sf/limit/noobs/ip/$user
+
+noobzvpns --add-user $user $pass --expired-user $user $exp
+expi=`date -d "$exp days" +"%Y-%m-%d"`
+#useradd -e `date -d "$exp days" +"%Y-%m-%d"` -s /bin/false -M $user
+exp="$(chage -l $user | grep "Account expires" | awk -F": " '{print $2}')"
+#echo -e "$pass\n$pass\n"|passwd $user &> /dev/null
+echo -e "### $user $expi $pass" >> /etc/xray/noob
+clear
+cat > /home/vps/public_html/noobzvpns-$user.txt <<-END
+◇━━━━━━━━━━━━━━━━━◇
+NOOBZVPN ACCOUNT
+◇━━━━━━━━━━━━━━━━━◇
+DOMAIN : $domain
+USERNAME : $user
+PASSWORD : $pass
+IP LIMIT : $ip
+EXP DAYS : $expi
+tcp_std port :  2052
+tcp_ssl port : 2053
+◇━━━━━━━━━━━━━━━━━◇
+Example config TCP_STD 2052
+◇━━━━━━━━━━━━━━━━━◇
+
+EEOThxTDcO2jLIcVRZMWLGmpRt9xFIObkfUQtmwToeE03BaVp+n3KTboYwUCQ41kfJV+kYQEshyFJhPX3L2SyiZkE23zFGECJOFplGQ5JoEXRFGm1lHS3WpGhXrRc+SLtQg/KqS8N9BZ+Jvr6PMzsDtRESESPutYMXnKhC61w6sX3fWEUy7aFD4xKpfOo94zaHZwiUEOf5be0oimuH1lU8sYkF2fM0yAbwpFpI1HYY2ckGLU4oIbAe/sfGnU8z0RICf4bf11wLLtzDJA0iaHVoUY6a78O4spqkrPRrAyTJVMqsCbLK6NDNyc4aHbWOMUf8QgB2ReABI2exlmtmRkTLtROBrGCj02wVcRgSL4jvA4n/U2t2ylUQiZo0RV21DuHuERZLHIjwKu/AnDyUf5bO2UdE72I9G1n056WNABF84aQ0OLd8gxK5RCCIWhqoCsUqSHu+3Dp9FTmhjMmCnDvQGMysWdVS5LVT0h1xixN+9Ond/bC0R7sQWe4XHsDRQRIIJp9dTOhlZJbxzDiNXV95d8LzWthPuRll/2q6sJnWLHwM6nVHJovJ1VDxXcGucxLcv1mD01U2lFsSP8Cie7Wb9z=
+
+◇━━━━━━━━━━━━━━━━━◇
+Example config TCP_SSL 2053
+◇━━━━━━━━━━━━━━━━━◇
+
+EFSLNG62tjxFr/pGzeJ3XmNhKbppzg9SZMWevofHitRS+d+o1/1C/wkNwGBiS66dYmbIO/Fax+lhmRHtPVFhoDZyZXBCY4WWgGZgdhHUaGj6drXrzTwVEVZSXkzRXHwRJTGQYuA1Ay6i7qQ9HKymreXSJm9L9XpFlAsWswwUV9XjBnEJ5WtSocti01wMALkytEQbFyGM7Q/AOtJJtgpHOHTiaKZQPQnI080kdCNLA29VOFe3Z+t8tzUPy8033WuXz1aiI8O64262/QMKLF0P/ZEtXG16+uzkLcsfmlK+ef4wpNGQmMgPUsykz1S13pFBlsQVPWjw6rxKAwoCFCDgyoqPQbZaFqQJI5jCywjRbETvH+PgHgssPqPs7jVWrKJyMrRG/IzRYoejAkT8xD3tMkaPGp/g+P6Wl9+VL/tUKCsi3xr4lGHm0phCGf4+9u8s3X7szz6qBPkoazvvcYDluKt90dodvO5rJABEF1C4XjucuVGx7mPLpveYhAuecwcxJo3Ghl2YUOoQOE83fB9RVWqyCXnVpnXJnI4dNcrOIyV1t/VfLL3q0VKRmLA6CFk94gsRX7COECq983VRD7bjAIrw
+
+◇━━━━━━━━━━━━━━━━━◇
+ • $author • 
+◇━━━━━━━━━━━━━━━━━◇
+END
+if [[ -e /etc/noobz ]]; then
+TEXT="
+◇━━━━━━━━━━━━━━━━━◇
+NOOBZVPN ACCOUNT
+◇━━━━━━━━━━━━━━━━━◇
+DOMAIN : <code>$domain</code>
+USERNAME : <code>$user</code>
+PASSWORD : <code>$pass</code>
+IP LIMIT : $ip
+EXP DAYS : $expi
+tcp_std port :  2052
+tcp_ssl port : 2053
+◇━━━━━━━━━━━━━━━━━◇
+Example config TCP_STD 2052
+◇━━━━━━━━━━━━━━━━━◇
+
+<code>EEOThxTDcO2jLIcVRZMWLGmpRt9xFIObkfUQtmwToeE03BaVp+n3KTboYwUCQ41kfJV+kYQEshyFJhPX3L2SyiZkE23zFGECJOFplGQ5JoEXRFGm1lHS3WpGhXrRc+SLtQg/KqS8N9BZ+Jvr6PMzsDtRESESPutYMXnKhC61w6sX3fWEUy7aFD4xKpfOo94zaHZwiUEOf5be0oimuH1lU8sYkF2fM0yAbwpFpI1HYY2ckGLU4oIbAe/sfGnU8z0RICf4bf11wLLtzDJA0iaHVoUY6a78O4spqkrPRrAyTJVMqsCbLK6NDNyc4aHbWOMUf8QgB2ReABI2exlmtmRkTLtROBrGCj02wVcRgSL4jvA4n/U2t2ylUQiZo0RV21DuHuERZLHIjwKu/AnDyUf5bO2UdE72I9G1n056WNABF84aQ0OLd8gxK5RCCIWhqoCsUqSHu+3Dp9FTmhjMmCnDvQGMysWdVS5LVT0h1xixN+9Ond/bC0R7sQWe4XHsDRQRIIJp9dTOhlZJbxzDiNXV95d8LzWthPuRll/2q6sJnWLHwM6nVHJovJ1VDxXcGucxLcv1mD01U2lFsSP8Cie7Wb9z=</code>
+
+◇━━━━━━━━━━━━━━━━━◇
+Example config TCP_SSL 2053
+◇━━━━━━━━━━━━━━━━━◇
+
+<code>EFSLNG62tjxFr/pGzeJ3XmNhKbppzg9SZMWevofHitRS+d+o1/1C/wkNwGBiS66dYmbIO/Fax+lhmRHtPVFhoDZyZXBCY4WWgGZgdhHUaGj6drXrzTwVEVZSXkzRXHwRJTGQYuA1Ay6i7qQ9HKymreXSJm9L9XpFlAsWswwUV9XjBnEJ5WtSocti01wMALkytEQbFyGM7Q/AOtJJtgpHOHTiaKZQPQnI080kdCNLA29VOFe3Z+t8tzUPy8033WuXz1aiI8O64262/QMKLF0P/ZEtXG16+uzkLcsfmlK+ef4wpNGQmMgPUsykz1S13pFBlsQVPWjw6rxKAwoCFCDgyoqPQbZaFqQJI5jCywjRbETvH+PgHgssPqPs7jVWrKJyMrRG/IzRYoejAkT8xD3tMkaPGp/g+P6Wl9+VL/tUKCsi3xr4lGHm0phCGf4+9u8s3X7szz6qBPkoazvvcYDluKt90dodvO5rJABEF1C4XjucuVGx7mPLpveYhAuecwcxJo3Ghl2YUOoQOE83fB9RVWqyCXnVpnXJnI4dNcrOIyV1t/VfLL3q0VKRmLA6CFk94gsRX7COECq983VRD7bjAIrw</code>
+
+◇━━━━━━━━━━━━━━━━━◇
+ • $author • 
+◇━━━━━━━━━━━━━━━━━◇
+"
+else
+TEXT="
+◇━━━━━━━━━━━━━━━━━◇
+NOOBZVPN ACCOUNT
+◇━━━━━━━━━━━━━━━━━◇
+DOMAIN : <code>$domain</code>
+USERNAME : <code>$user</code>
+PASSWORD : <code>$pass</code>
+IP LIMIT : $ip
+EXP DAYS : $expi
+tcp_std port :  2052
+tcp_ssl port : 2053
+◇━━━━━━━━━━━━━━━━━◇
+Example config TCP_STD 2052
+◇━━━━━━━━━━━━━━━━━◇
+
+<code>EEOThxTDcO2jLIcVRZMWLGmpRt9xFIObkfUQtmwToeE03BaVp+n3KTboYwUCQ41kfJV+kYQEshyFJhPX3L2SyiZkE23zFGECJOFplGQ5JoEXRFGm1lHS3WpGhXrRc+SLtQg/KqS8N9BZ+Jvr6PMzsDtRESESPutYMXnKhC61w6sX3fWEUy7aFD4xKpfOo94zaHZwiUEOf5be0oimuH1lU8sYkF2fM0yAbwpFpI1HYY2ckGLU4oIbAe/sfGnU8z0RICf4bf11wLLtzDJA0iaHVoUY6a78O4spqkrPRrAyTJVMqsCbLK6NDNyc4aHbWOMUf8QgB2ReABI2exlmtmRkTLtROBrGCj02wVcRgSL4jvA4n/U2t2ylUQiZo0RV21DuHuERZLHIjwKu/AnDyUf5bO2UdE72I9G1n056WNABF84aQ0OLd8gxK5RCCIWhqoCsUqSHu+3Dp9FTmhjMmCnDvQGMysWdVS5LVT0h1xixN+9Ond/bC0R7sQWe4XHsDRQRIIJp9dTOhlZJbxzDiNXV95d8LzWthPuRll/2q6sJnWLHwM6nVHJovJ1VDxXcGucxLcv1mD01U2lFsSP8Cie7Wb9z=</code>
+
+◇━━━━━━━━━━━━━━━━━◇
+Example config TCP_SSL 2053
+◇━━━━━━━━━━━━━━━━━◇
+
+<code>EFSLNG62tjxFr/pGzeJ3XmNhKbppzg9SZMWevofHitRS+d+o1/1C/wkNwGBiS66dYmbIO/Fax+lhmRHtPVFhoDZyZXBCY4WWgGZgdhHUaGj6drXrzTwVEVZSXkzRXHwRJTGQYuA1Ay6i7qQ9HKymreXSJm9L9XpFlAsWswwUV9XjBnEJ5WtSocti01wMALkytEQbFyGM7Q/AOtJJtgpHOHTiaKZQPQnI080kdCNLA29VOFe3Z+t8tzUPy8033WuXz1aiI8O64262/QMKLF0P/ZEtXG16+uzkLcsfmlK+ef4wpNGQmMgPUsykz1S13pFBlsQVPWjw6rxKAwoCFCDgyoqPQbZaFqQJI5jCywjRbETvH+PgHgssPqPs7jVWrKJyMrRG/IzRYoejAkT8xD3tMkaPGp/g+P6Wl9+VL/tUKCsi3xr4lGHm0phCGf4+9u8s3X7szz6qBPkoazvvcYDluKt90dodvO5rJABEF1C4XjucuVGx7mPLpveYhAuecwcxJo3Ghl2YUOoQOE83fB9RVWqyCXnVpnXJnI4dNcrOIyV1t/VfLL3q0VKRmLA6CFk94gsRX7COECq983VRD7bjAIrw</code>
+
+◇━━━━━━━━━━━━━━━━━◇
+ • $author • 
+◇━━━━━━━━━━━━━━━━━◇
+"
+fi
+curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+cd
+if [ ! -e /etc/tele ]; then
+echo -ne
+else
+echo "$TEXT" > /etc/notiftele
+bash /etc/tele
+fi
+user2=$(echo "$user" | cut -c 1-3)
+TIME2=$(date +'%Y-%m-%d %H:%M:%S')
+TEXT2="
+<code>◇━━━━━━━━━━━━━━◇</code>
+<code>   TRANSAKSI NOOBZVPNS SUCCES </code>
+<code>◇━━━━━━━━━━━━━━◇</code>
+<code>DOMAIN   :</code> <code>${domain} </code>
+<code>ISP      :</code> <code>$ISP $CITY </code>
+<code>DATE   :</code> <code>${TIME2} WIB </code>
+<code>DETAIL   :</code> <code>Trx NOOBZVPN </code>
+<code>USER :</code> <code>${user2}xxx </code>
+<code>DURASI  :</code> <code>$exp Hari </code>
+<code>◇━━━━━━━━━━━━━━◇</code>
+<i>AutoNotif Create Akun From Server..</i>"
+curl -s --max-time $TIMES -d "chat_id=$CHATID2&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL2 >/dev/null
+echo -e "◇━━━━━━━━━━━━━━━━━◇" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "NOOBZVPN ACCOUNT" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "◇━━━━━━━━━━━━━━━━━◇" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "DOMAIN : $( cat /etc/xray/domain )" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "USERNAME: $user" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "PASSWORD: $pass" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "IP LIMIT: $ip" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "EXP DAYS: EXP DAYS : $expi ( $exp Days )" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "tcp_std port:  2052" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "tcp_ssl port: 2053" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "◇━━━━━━━━━━━━━━━━━◇" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "Example config TCP_STD 2052" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "◇━━━━━━━━━━━━━━━━━◇" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo "" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "EEOThxTDcO2jLIcVRZMWLGmpRt9xFIObkfUQtmwToeE03BaVp+n3KTboYwUCQ41kfJV+kYQEshyFJhPX3L2SyiZkE23zFGECJOFplGQ5JoEXRFGm1lHS3WpGhXrRc+SLtQg/KqS8N9BZ+Jvr6PMzsDtRESESPutYMXnKhC61w6sX3fWEUy7aFD4xKpfOo94zaHZwiUEOf5be0oimuH1lU8sYkF2fM0yAbwpFpI1HYY2ckGLU4oIbAe/sfGnU8z0RICf4bf11wLLtzDJA0iaHVoUY6a78O4spqkrPRrAyTJVMqsCbLK6NDNyc4aHbWOMUf8QgB2ReABI2exlmtmRkTLtROBrGCj02wVcRgSL4jvA4n/U2t2ylUQiZo0RV21DuHuERZLHIjwKu/AnDyUf5bO2UdE72I9G1n056WNABF84aQ0OLd8gxK5RCCIWhqoCsUqSHu+3Dp9FTmhjMmCnDvQGMysWdVS5LVT0h1xixN+9Ond/bC0R7sQWe4XHsDRQRIIJp9dTOhlZJbxzDiNXV95d8LzWthPuRll/2q6sJnWLHwM6nVHJovJ1VDxXcGucxLcv1mD01U2lFsSP8Cie7Wb9z=" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo "" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "◇━━━━━━━━━━━━━━━━━◇" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "Example config TCP_SSL 2053" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "◇━━━━━━━━━━━━━━━━━◇" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo "" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "EFSLNG62tjxFr/pGzeJ3XmNhKbppzg9SZMWevofHitRS+d+o1/1C/wkNwGBiS66dYmbIO/Fax+lhmRHtPVFhoDZyZXBCY4WWgGZgdhHUaGj6drXrzTwVEVZSXkzRXHwRJTGQYuA1Ay6i7qQ9HKymreXSJm9L9XpFlAsWswwUV9XjBnEJ5WtSocti01wMALkytEQbFyGM7Q/AOtJJtgpHOHTiaKZQPQnI080kdCNLA29VOFe3Z+t8tzUPy8033WuXz1aiI8O64262/QMKLF0P/ZEtXG16+uzkLcsfmlK+ef4wpNGQmMgPUsykz1S13pFBlsQVPWjw6rxKAwoCFCDgyoqPQbZaFqQJI5jCywjRbETvH+PgHgssPqPs7jVWrKJyMrRG/IzRYoejAkT8xD3tMkaPGp/g+P6Wl9+VL/tUKCsi3xr4lGHm0phCGf4+9u8s3X7szz6qBPkoazvvcYDluKt90dodvO5rJABEF1C4XjucuVGx7mPLpveYhAuecwcxJo3Ghl2YUOoQOE83fB9RVWqyCXnVpnXJnI4dNcrOIyV1t/VfLL3q0VKRmLA6CFk94gsRX7COECq983VRD7bjAIrw" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo "" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "◇━━━━━━━━━━━━━━━━━◇" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e " • $author •" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+echo -e "◇━━━━━━━━━━━━━━━━━◇" | tee -a /etc/xray/noobz/akun/log-create-${user}.log
+read -p "Enter Back To Menu"
+m-noobz
+}
+
+
+function delete(){
+clear
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║ ${NC}${COLBG1}                   ${WH}• DELETE NOOBZ •               ${NC}$COLOR1 ║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+
+NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/noob")
+	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
+		echo ""
+		echo "You have no existing clients!"
+		exit 1
+	fi
+
+	echo ""
+	echo " Select the existing client you want to remove"
+	echo " Press CTRL+C to return"
+	echo " ==============================="
+	echo "     No  Expired   User"
+	grep -E "^### " "/etc/xray/noob" | cut -d ' ' -f 2-3 | nl -s ') '
+	until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
+		if [[ ${CLIENT_NUMBER} == '1' ]]; then
+			read -rp "Select one client [1]: " CLIENT_NUMBER
+		else
+			read -rp "Select one client [1-${NUMBER_OF_CLIENTS}]: " CLIENT_NUMBER
+		fi
+	done
+CLIENT_NAME=$(grep -E "^### " "/etc/xray/noob" | cut -d ' ' -f 2-3 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^### " "/etc/xray/noob" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+exp=$(grep -E "^### " "/etc/xray/noob" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
+sed -i "/^### $user $exp/d" /etc/xray/noob
+sed -i '/^,"'"$user"'"$/d' /etc/noobzvpns/users.json
+noobzvpns --remove-user $user
+expi=`date -d "$exp days" +"%Y-%m-%d"`
+systemctl restart noobzvpns
+
+clear
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║ ${NC}${COLBG1}                   ${WH}• DELETE NOOBZ •               ${NC}$COLOR1 ║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+echo -e ""
+echo -e "$WH USERNAME $user HAS BEEN DELETE $NC"
+echo -e "$WH EXPIRED : $expi $NC"
+echo -e ""
+TEXT="
+<code>◇━━━━━━━━━━━━━━◇</code>
+<code>  DELETE NOOBZVPNS</code>
+<code>◇━━━━━━━━━━━━━━◇</code>
+<code>DOMAIN   :</code> <code>${domain} </code>
+<code>ISP      :</code> <code>$ISP $CITY </code>
+<code>USERNAME :</code> <code>$user</code>
+<code>EXPIRED  :</code> <code>$expi </code>
+<code>◇━━━━━━━━━━━━━━◇</code>
+<i>Succes Delete This User...</i>
+"
+curl -s --max-time $TIMES -d "chat_id=$CHATIDNEW&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+cd
+if [ ! -e /etc/tele ]; then
+echo -ne
+else
+echo "$TEXT" > /etc/notiftele
+bash /etc/tele
+fi
+echo -e " $COLOR1╔═════════════════════════ ${WH}BY${NC} ${COLOR1}═══════════════════════╗ ${NC}"
+printf "                      ${COLOR1}%3s${NC} ${WH}%0s${NC} ${COLOR1}%3s${NC}\n" "• " "$author" " •"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+read -p "Enter Back To Menu"
+m-noobz
+}
+
+
+function renew(){
+clear
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║ ${NC}${COLBG1}                  ${WH}• RENEW NOOBZ •                 ${NC}$COLOR1 ║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+read -p "username: " user
+read -p "expired?: " exp
+noobzvpns --renew-user $user --expired-user $user $exp
+clear
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║ ${NC}${COLBG1}                 ${WH}• RENEW NOOBZ •                  ${NC}$COLOR1 ║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+echo "USERNAME: $user"
+echo "renew success!!"
+echo -e " $COLOR1╔═════════════════════════ ${WH}BY${NC} ${COLOR1}═══════════════════════╗ ${NC}"
+printf "                      ${COLOR1}%3s${NC} ${WH}%0s${NC} ${COLOR1}%3s${NC}\n" "• " "$author" " •"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+echo "USERNAME: $user"
+echo "renew success!!"
+echo -e "$COLOR1╭══════════════════════ • ${WH}BY${NC}${COLOR1} • ═══════════════════════╮${NC}"
+printf "                ${COLOR1}%3s${NC} ${WH}%0s${NC} ${COLOR1}%3s${NC}\n" "• " "$author" " •"
+echo -e "$COLOR1╰═════════════════════════════════════════════════════╯${NC}"
+read -p "Enter Back To Menu"
+m-noobz
+}
+
+
+
+
+function lock(){
+clear
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║ ${NC}${COLBG1}                   ${WH}• LOCK  NOOBZ •                ${NC}$COLOR1 ║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+read -p "username: " user
+noobzvpns --block-user $user
+clear
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║ ${NC}${COLBG1}                   ${WH}• LOCK  NOOBZ •                ${NC}$COLOR1 ║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+echo "USERNAME: $user"
+echo "locked success!!"
+echo -e " $COLOR1╔═════════════════════════ ${WH}BY${NC} ${COLOR1}═══════════════════════╗ ${NC}"
+printf "                      ${COLOR1}%3s${NC} ${WH}%0s${NC} ${COLOR1}%3s${NC}\n" "• " "$author" " •"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+read -p "Enter Back To Menu"
+m-noobz
+}
+
+
+
+
+
+
+function show(){
+
+clear
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║ ${NC}${COLBG1}                  ${WH}• MEMBER  NOOBZ •               ${NC}$COLOR1 ║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+noobzvpns --info-all-user | awk '/^\s*\+.*-> active/ {gsub(/(issued\(yyyymmdd\)|hash_key): [0-9a-f]+/, ""); print; getline; print; getline; getline; getline; print; print "═══════════════════"}'
+
+echo -e " $COLOR1╔═════════════════════════ ${WH}BY${NC} ${COLOR1}═══════════════════════╗ ${NC}"
+printf "                      ${COLOR1}%3s${NC} ${WH}%0s${NC} ${COLOR1}%3s${NC}\n" "• " "$author" " •"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+read -p "Enter Back To Menu"
+m-noobz
+
+}
+
+
+
+function unlock(){
+clear
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║ ${NC}${COLBG1}                  ${WH}• UNLOCK  NOOBZ •               ${NC}$COLOR1 ║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+read -p "username: " user
+noobzvpns --unblock-user $user
+clear
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║ ${NC}${COLBG1}                  ${WH}• UNLOCK  NOOBZ •               ${NC}$COLOR1 ║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+echo "USERNAME: $user"
+echo "unlocked success!!"
+echo -e " $COLOR1╔═════════════════════════ ${WH}BY${NC} ${COLOR1}═══════════════════════╗ ${NC}"
+printf "                      ${COLOR1}%3s${NC} ${WH}%0s${NC} ${COLOR1}%3s${NC}\n" "• " "$author" " •"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+read -p "Enter Back To Menu"
+m-noobz
+}
+
+
+
+function remove(){
+clear
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║ ${NC}${COLBG1}                  ${WH}• REMOVE  NOOBZ •               ${NC}$COLOR1 ║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+
+read -p "Apakah Anda ingin menghapus semua user? (Y/N): " choice
+
+if [ "$choice" == "Y" ] || [ "$choice" == "y" ]; then
+    # Eksekusi perintah di sini
+    echo "MENGHAPUS SEMUA USER!"
+noobzvpns --remove-all-user
+elif [ "$choice" == "N" ] || [ "$choice" == "n" ]; then
+    echo "Membatalkan penghapusan."
+menu-noobzvpns
+else
+    echo "Pilihan tidak valid."
+fi
+
+clear
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║ ${NC}${COLBG1}                  ${WH}• REMOVE  NOOBZ •               ${NC}$COLOR1 ║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+echo "USERNAME: $user"
+echo "unlocked success!!"
+echo -e " $COLOR1╔═════════════════════════ ${WH}BY${NC} ${COLOR1}═══════════════════════╗ ${NC}"
+printf "                      ${COLOR1}%3s${NC} ${WH}%0s${NC} ${COLOR1}%3s${NC}\n" "• " "$author" " •"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+read -p "Enter Back To Menu"
+m-noobz
+}
+
+
+
+
+clear
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║${NC}${COLBG1}                ${WH}• NOOBZ PANEL MENU •                ${NC}$COLOR1║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+echo -e " $COLOR1║ $NC  ${WH}[${COLOR1}01${WH}]${NC} ${COLOR1}• ${WH}ADD AKUN${NC}           ${WH}[${COLOR1}04${WH}]${NC} ${COLOR1}• ${WH}DELETE USER${NC}     $COLOR1║ $NC"
+echo -e " $COLOR1║ $NC                                                  ${NC} $COLOR1║ $NC"
+echo -e " $COLOR1║ $NC  ${WH}[${COLOR1}02${WH}]${NC} ${COLOR1}• ${WH}SHOW AKUN${NC}          ${WH}[${COLOR1}05${WH}]${NC} ${COLOR1}• ${WH}LOCKED USER${NC}     $COLOR1║ $NC"
+echo -e " $COLOR1║ $NC                                                  ${NC} $COLOR1║ $NC"
+echo -e " $COLOR1║ $NC  ${WH}[${COLOR1}03${WH}]${NC} ${COLOR1}• ${WH}RENEW AKUN${NC}         ${WH}[${COLOR1}06${WH}]${NC} ${COLOR1}• ${WH}UNLOCKED USER${NC}   $COLOR1║ $NC"
+echo -e " $COLOR1║ $NC                                                  ${NC} $COLOR1║ $NC"
+echo -e " $COLOR1║ $NC  ${WH}[${COLOR1}00${WH}]${NC} ${COLOR1}• ${WH}GO BACK${NC}            ${WH}[${COLOR1}07${WH}]${NC} ${COLOR1}• ${WH}REMOVE ALL USER${NC} $COLOR1║ $NC"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+echo -e " $COLOR1╔═════════════════════════ ${WH}BY${NC} ${COLOR1}═══════════════════════╗ ${NC}"
+printf "                      ${COLOR1}%3s${NC} ${WH}%0s${NC} ${COLOR1}%3s${NC}\n" "• " "$author" " •"
+echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+echo -e ""
+echo -ne " ${WH}Select menu ${COLOR1}: ${WH}"; read opt
+case $opt in
+01 | 1) clear ; create ;;
+02 | 2) clear ; show ;;
+03 | 3) clear ; renew ;;
+04 | 4) clear ; delete ;;
+05 | 5) clear ; lock ;;
+06 | 6) clear ; unlock ;;
+07 | 7) clear ; remove ;;
+100) clear ; $up2u ;;
+00 | 0) clear ; menu ;;
+*) clear ; m-noobz ;;
+esac

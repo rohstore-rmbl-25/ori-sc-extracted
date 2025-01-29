@@ -1,0 +1,61 @@
+#!/bin/bash
+# Coloryellow="\033[0;33m"
+ungu="\033[0;35m"
+Red="\033[91;1m"
+Xark="\033[0m"
+BlueCyan="\033[5;36m"
+WhiteBe="\033[5;37m"
+GreenBe="\033[5;32m"
+YellowBe="\033[5;33m"
+BlueBe="\033[5;34m"
+#nama=$(cat /etc/xray/username)
+clear
+function baris_panjang() {
+  echo -e "${BlueCyan} ——————————————————————————————————— ${Xark} "
+}
+
+function Newbie_Banner() {
+clear
+baris_panjang
+echo -e "${ungu}           $nama      ${Xark} "
+baris_panjang
+}
+
+function Sc_Credit(){
+sleep 1
+baris_panjang
+echo -e "${ungu}  Terimakasih Telah Menggunakan ${Xark}"
+echo -e "${ungu}          Script Credit ${Xark}"
+echo -e "${ungu}          $nama ${Xark}"
+baris_panjang
+exit 1
+}
+sed -i '/###/d' /etc/vmess/.vmess.db
+sed -i '/###/d' /etc/vless/.vless.db
+sed -i '/###/d' /etc/trojan/.trojan.db
+data=( `grep -E "^### " "/etc/xray/config.json" | cut -d ' ' -f 2 | column -t | sort | uniq`);
+for PID in "${data[@]}"
+do
+    uuid=$(grep -E "^},{" "/etc/xray/config.json" |  grep -i '"'"${PID}"'"' | cut -d " " -f 2 | cut -d '"' -f 2 | uniq )
+    exp=$(grep -wE "^### $PID" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+    sed -i '/Account$/a\### '"$PID $exp $uuid"'' /etc/vmess/.vmess.db
+done
+data1=( `grep -E "^#& " "/etc/xray/config.json" | cut -d ' ' -f 2 | column -t | sort | uniq`);
+for PID in "${data1[@]}"
+do
+    uuid=$(grep -E "^},{" "/etc/xray/config.json" |  grep -i '"'"${PID}"'"' | cut -d " " -f 2 | cut -d '"' -f 2 | uniq )
+    exp=$(grep -wE "^#& $PID" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+    sed -i '/Account$/a\### '"$PID $exp $uuid"'' /etc/vless/.vless.db
+done
+data2=( `grep -E "^#! " "/etc/xray/config.json" | cut -d ' ' -f 2 | column -t | sort | uniq`);
+for PID in "${data2[@]}"
+do
+    uuid=$(grep -E "^},{" "/etc/xray/config.json" |  grep -i '"'"${PID}"'"' | cut -d " " -f 2 | cut -d '"' -f 2 | uniq )
+    exp=$(grep -wE "^#! $PID" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+    sed -i '/Account$/a\### '"$PID $exp $uuid"'' /etc/trojan/.trojan.db
+done
+systemctl restart kyt  > /dev/null 2>&1
+Newbie_Banner
+echo -e "${ungu}  Akun Bot Telah Diperbaiki ${Xark}"
+echo -e "${ungu}  Silahkan Cek Bot Anda ${Xark}"
+Sc_Credit
